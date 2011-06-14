@@ -76,15 +76,15 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " For Vim Addons
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-fun ActivateAddons()
-  set runtimepath+=~/.vim_runtime/addons/vim-addon-manager
-  try
-    call scriptmanager#Activate(["vim-addon-async","vim-addon-completion","vim-addon-json-encoding"])
-  catch /.*/
-    echoe v:exception
-  endtry
-endf
-call ActivateAddons()
+"fun ActivateAddons()
+"  set runtimepath+=~/.vim_runtime/addons/vim-addon-manager
+"  try
+"    call scriptmanager#Activate(["vim-addon-async","vim-addon-completion","vim-addon-json-encoding"])
+"  catch /.*/
+"    echoe v:exception
+"  endtry
+"endf
+"call ActivateAddons()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " For PeepOpen
@@ -107,6 +107,11 @@ set errorformat=%E[error]\ %f:%l:\ %m,%C[error]\ %p^,%-C%.%#,%Z,
                \%W[warn]\ %f:%l:\ %m,%C[warn]\ %p^,%-C%.%#,%Z,
                \%-G%.%#
 set errorfile=target/error
+
+" pathogen
+filetype off
+call pathogen#helptags()
+call pathogen#runtime_append_all_bundles()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -226,8 +231,8 @@ set noswapfile
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set expandtab
-set shiftwidth=4
-set tabstop=4
+set shiftwidth=2
+set tabstop=2
 set smarttab
 
 set lbr
@@ -535,6 +540,7 @@ au FileType python map <buffer> <leader>D ?def
 """"""""""""""""""""""""""""""
 " => JavaScript section
 """""""""""""""""""""""""""""""
+au BufNewFile,BufRead *.json set ft=javascript
 au FileType javascript call JavaScriptFold()
 au FileType javascript setl fen
 au FileType javascript setl nocindent
@@ -555,6 +561,10 @@ function! JavaScriptFold()
     endfunction
     setl foldtext=FoldText()
 endfunction
+
+au BufNewFile,BufRead *.gradle set syntax=groovy
+au BufNewFile,BufRead *.thrift set filetype=thrift
+au BufNewFile,BufRead *.proto set filetype=proto
 
 """"""""""""""""""""""""""""""
 " => Fuzzy finder
